@@ -14,7 +14,22 @@ class SearchForm extends React.Component {
         this.setState({sortedData})
     }
 
-    linearSearch(arr, num) {
+    handleSubmit(e) {
+        e.preventDefault();
+
+        const input = parseInt(e.target.num.value);
+        const searchBy = e.target.searchBy.value;
+
+        if(searchBy === 'linear') {
+            this.setState(this.linearSearch(data, input));
+        }
+        if(searchBy === 'binary') {
+            const sortedData = data.sort((a, b) => a-b);
+            this.setState(this.binarySearch(data, input));
+        }
+    }
+
+    linearSearch(arr, input) {
         console.log(arr);
         let counter = 0;
         for(let i = 0; i < arr.length; i++) {
@@ -29,28 +44,31 @@ class SearchForm extends React.Component {
     };
 
 }
-    binarySearch(arr, item, start=0, end=arr.length - 1, counter=0) {
+    binarySearch(arr, input, start=0, end=arr.length - 1, counter=0) {
         counter++;
         it(start>end) {
             return{input, located: false, counter};
     }
     const index= Math.floor((start+end)/2);
-    const item = arr[i];
-
-    console.log('index:' + index);
-    console.log('item:'+ item);
+    const num = arr[i];
 
     if(input === num) {
         return{input, located: true, counter};
-    } else if (input > item) {
+    } else if (input > num) {
         return this.binarySearch(arr, input, index+1, end, counter);
-    } else if (input < item) {
-        return this.binarySearch(arr, inpute, start, index-1, counter);
+    } else if (input < num) {
+        return this.binarySearch(arr, input, start, index-1, counter);
     }
 }
 
     render() {
         return (
-            
+            <div className='searchForm'>
+                <form onSbumit={(e) => this.handleSubmit(e)}
+                > 
+                    <input type='text' name='input' id='input' onChange = 
+                </form>
+            </div>
+
         )
     }
